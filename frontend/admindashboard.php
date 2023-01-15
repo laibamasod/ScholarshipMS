@@ -8,6 +8,7 @@ if (isset($_SESSION["addlogin_id"])) { // the admin_id session variable is set
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard </title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -123,6 +124,7 @@ if (isset($_SESSION["addlogin_id"])) { // the admin_id session variable is set
   include "../class/interface.php";
   $addid=$_SESSION['addlogin_id'];
   $admin = getAdminDetails($addid);
+  $cmp=getComplaints();
   ?>
   <script>
     function openNav() {
@@ -278,26 +280,26 @@ if (isset($_SESSION["addlogin_id"])) { // the admin_id session variable is set
         </thead>
         <tbody>
           <?php
-          foreach($cmp as $cmp_row)
+          foreach($cmp as $cmprow)
           {
             
           ?>
 
               <tr>
-                <td class="px-4 py-3"><?php echo $cmp_row['cmp_id'];?></td>
-                <td class="px-4 py-3"><?php echo $cmp_row['cmp_type'];?></td>
-                <td class="px-4 py-3"><?php echo $cmp_row['status'];?></td>
+                <td class="px-4 py-3"><?php echo $cmprow['cmp_id'];?></td>
+                <td class="px-4 py-3"><?php echo $cmprow['cmp_type'];?></td>
+                <td class="px-4 py-3"><?php echo $cmprow['status'];?></td>
                 <?php
-                    if($cmp_row['status']=="pending")
+                    if($cmprow['status']=="pending")
                     {
-                       $_SESSION['complaint_id'] = $cmp_row['cmp_id'];
-                       $sd = $database_object->view_student( $cmp_row['std_id']);
-                       $_SESSION['complaint_name'] = $sd['std_name'];
-                       $_SESSION["complaint_des"]=$cmp_row['cmp_desc'];
+                      $_SESSION['cmpid']= $cmprow['cmp_id'];
+                      $_SESSION['cmpname']= $cmprow['name_app'];
+                      $stdid=$cmprow['std_id'];
                 ?>
                 <td class="border-t-2 border-gray-200 px-4 py-3">
-                  <button class="button button2 bg-green-500"  onClick="location.href='../frontend/feedback.php'">Resolve</button>
+                  <button class="button button2 bg-green-500" onclick="location.href='../frontend/feedback.php'">Resolve</button>
                 </td>
+                
                 <td class="px-4 py-3">-----</td>
                 <?php
                     }

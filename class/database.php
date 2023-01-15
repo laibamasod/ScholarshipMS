@@ -143,7 +143,6 @@ class database
             $stat = $pdo->prepare($sql);
             $stat->execute();
             if($result=$stat->fetchall()){
-              
                     return $result;
                 }
                 else{

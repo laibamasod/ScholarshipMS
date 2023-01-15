@@ -122,7 +122,8 @@ if (isset($_SESSION["addlogin_id"])) { // the std_id session variable is set
   include "../class/database.php";
   $database_object = new database();
   $row1 = $database_object->view_admin($_SESSION["addlogin_id"]);
- 
+  $complaint_id = $_SESSION['cmpid'];
+  $name = $_SESSION['cmpname'];
   ?>
     <script>
         function openNav() {
@@ -186,16 +187,16 @@ if (isset($_SESSION["addlogin_id"])) { // the std_id session variable is set
                  <div class="p-2 w-1/2">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Complaint_ID</label>
-                            <input type="text" id="name" name="name" value="<?php 
-                             echo $_SESSION["complaint_id"] ;?>" disabled
+                            <input type="text" id="cmpid" name="cmpid" value="<?php 
+                             echo $complaint_id;?>" disabled
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
                         </div>
                     </div>
                     <div class="p-2 w-1/2">
                         <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
-                            <input type="text" id="name" name="name" value="<?php 
-                             echo $_SESSION["complaint_name"] ;?>" disabled
+                            <input type="text" id="cmpname" name="name" value="<?php 
+                             echo $name;?>" disabled
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
                         </div>
                     </div>
@@ -208,13 +209,14 @@ if (isset($_SESSION["addlogin_id"])) { // the std_id session variable is set
                         </div>
                     </div>
                     <div class="p-2 w-full">
-                        <input type="submit" value="Send"
+                        <input type="submit" value="Send" 
                             class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
                     </div>
                 
                 </div>
             </div>
         </form>
+        
         </div>
     </section>
     <footer class="text-white body-font bg-green-500">
