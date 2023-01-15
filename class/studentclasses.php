@@ -9,19 +9,34 @@ class complaint
     private $std_id;
     private $applicant_name;
     private $applicant_email;
+    private $cmp;
     //... other properties
 
     // constructor
-    public function __construct($db,$stdid,$name,$email,$msg,$type) 
+    public function __construct($db) 
     {
-    $this->db=$db;
-    $this->cmp_desc=$msg;
-    $this->cmp_status="pending";
-    $this->cmp_type=$type;
-    $this->std_id=$stdid;
-    $this->applicant_name=$name;
-    $this->applicant_email=$email;
+        $this->db=$db;
+   /* if($db==null&$stdid==null&$name==null&$email==null&$msg=null&$type.=null)
+    {
+        $this->cmp_desc=$data['cmp_desc'];
+        $this->cmp_status=$data['cmp_desc'];
+        $this->cmp_type=$data['cmp_type'];
+        $this->std_id=$data['std_id'];
+        $this->applicant_name=$data['name_app'];
+        $this->applicant_email=$data['name_email'];
     }
+    else
+    {
+        $this->db=$db;
+        $this->cmp_desc=$msg;
+        $this->cmp_status="pending";
+        $this->cmp_type=$type;
+        $this->std_id=$stdid;
+        $this->applicant_name=$name;
+        $this->applicant_email=$email;
+    }
+    */
+}
     public function get_cmp_id()
     {
         return $this->cmp_id;
@@ -49,6 +64,13 @@ class complaint
     public function get_email_app()
     {
         return $this->email_app;
+    }
+    public function get_complaint($db)
+    {
+        $data=$db->get_all_complaints(); 
+        
+        $this->cmp=$data;
+        return  $this->cmp; 
     }
     public function insert_complaint($id,$name,$email,$msg,$type)
     {

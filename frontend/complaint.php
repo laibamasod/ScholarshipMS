@@ -1,7 +1,6 @@
 <?php 
-
-session_start();
-if (isset($_SESSION["std_id"])) { // the std_id session variable is set
+ session_start();
+if (isset($_SESSION["std_id"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +8,7 @@ if (isset($_SESSION["std_id"])) { // the std_id session variable is set
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Make Complaint</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -114,6 +114,11 @@ if (isset($_SESSION["std_id"])) { // the std_id session variable is set
                 font-size: 18px;
             }
         }
+    .success-msg {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}
     </style>
 </head>
 
@@ -123,11 +128,6 @@ if (isset($_SESSION["std_id"])) { // the std_id session variable is set
  include "../class/interface.php";
  $stdid=$_SESSION['std_id'];
  $student = getStudentDetails($stdid);
- session_start();
-if (isset($_SESSION['message'])) {
-    echo '<div class="success">' . $_SESSION['message'] . '</div>';
-    unset($_SESSION['message']);
-}
   ?>
     <script>
         function openNav() {
@@ -182,7 +182,7 @@ if (isset($_SESSION['message'])) {
                 <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Provide Feedback/Make Complaint</h1>
                 <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Tell us where you are facing an issue.</p>
             </div>
-            <form  action="../action/complaint_action.php" method="POST">
+            <form method="POST" action="../action/complaint_action.php"id="complainform">
             <div class="lg:w-1/2 md:w-2/3 mx-auto">
                 <div class="flex flex-wrap -m-2">
                
@@ -218,14 +218,31 @@ if (isset($_SESSION['message'])) {
                     </select>
 
                     <div class="p-2 w-full">
-                        <input type="submit" value="Send"
-                            class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                    <button type="submit" value="Send" id="subbtn" class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Send</button>
                     </div>
-                
                 </div>
             </div>
         </form>
         </div>
+        <!--
+        <script>
+            $(document).ready(function() {
+                $("#complainform").submit(function(event) {
+                event.preventDefault(); // prevent the form from submitting
+                $.ajax({
+                    type: "POST",
+                    url: "complaint_action.php", // the file that will handle the form submission
+                    data: $("#complainform").serialize(), // serialize the form data
+                    success: function(response) {
+                    if (response == 'Success') {
+                        $("#subbtn").after("<div>Data inserted successfully!</div>");
+                    }
+                    }
+                });
+                });
+            });
+        </script>
+        -->
     </section>
     <footer class="text-white body-font bg-green-500">
         <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col"
@@ -319,7 +336,6 @@ function Validatemail()
      
   }
 }
-
 </script>
 <?php
 }

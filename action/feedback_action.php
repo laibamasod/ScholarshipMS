@@ -1,19 +1,22 @@
 <?php
 session_start();
-include "../class/database.php";
+include "../class/adminclasses.php";
+include "../class/interface.php";
+$addid=$_SESSION['addlogin_id'];
 
-$database_object = new database();
-$row1 = $database_object->view_admin($_SESSION["addlogin_id"]);
-$cmp_id=$_SESSION["complaint_id"];
-$std_name = $_SESSION["complaint_name"] ;
-$msg = $_POST['message'];
-if($database_object->insert_feedback_in_db($row1["addlogin_id"],$std_name,$msg,$cmp_id)){
-  echo("Added successfully");
+if(isset($_SESSION['cmpid'])){
+  $cmpid= $_SESSION['cmpid'];
+  }
+  if(isset($_SESSION['cmpname'])){
+  $name = $_SESSION['cmpname'];
+  }
+  
+$feed=$_POST['message'];
+$db=new database();
+$feedback = new feedback($db);
+if($feedback->insert_feedback($addid,$cmpid,$name,$feed)){
+  echo 'Success';
 }else{
-    echo("not Added successfully");
+  echo 'fail';
 }
-
-$database_object->update_complaint_in_db($_SESSION['complaint_id']);
-unset($_SESSION['complaint_id']);
-unset($_SESSION['complaint_name']);
 ?>

@@ -10,10 +10,10 @@ $email = $_POST['email'];
 $msg = $_POST['message'];
 $type = $_POST['comp_type'];
 $db=new database();
-$complain = new complaint($db,$std_id,$std_name,$email,$msg,$type);
+$complain = new complaint($db);
 if($complain->insert_complaint($std_id,$std_name,$email,$msg,$type)){
-  echo("Added successfully");
+  echo 'Success';
 }else{
-    echo("not Added successfully");
+  echo 'fail';
 }
 ?>

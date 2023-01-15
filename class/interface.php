@@ -1,5 +1,12 @@
 <?php
 include "../class../database.php";
+function getComplaints()
+{
+    $database=new database();
+    $cmp = new complaint($database);
+    $cmpdata=$cmp->get_complaint($database);
+    return $cmpdata;
+}
 function getAdminDetails($adddid) {
     $database = new database();
     $adminData = $database->view_admin($adddid);
